@@ -1,0 +1,36 @@
+mqtt:
+  sensor:
+    - state_topic: "mqtt/temp"
+      name: "blood oxygen"
+      "unit_of_measurement": "%"
+    - state_topic: "mqtt/humi"
+      name: "heartbeat"
+      "unit_of_measurement": "bpm"
+  light:
+    - command_topic: "mqtt/cmd"
+      name: "bedroom"
+      state_topic: "mqtt/state"
+      payload_on: "1"
+      payload_off: "0"
+    - command_topic: "mqtt/cmd3"
+      name: "esp32mqttled"
+      state_topic: "mqtt/state"
+      payload_on: "1"
+      payload_off: "0"
+
+sensor:    
+  - platform: template
+    sensors:
+      bloodoxygen:
+        value_template: >
+          {{states("sensor.blood_oxygen")|float| round(2)}}
+        friendly_name: "血氧量"
+        unit_of_measurement: "%"
+      heartbeat2:
+        value_template: >
+          {{states("sensor.heartbeat")|float| round(2)}}
+        friendly_name: "心跳"
+        unit_of_measurement: "bpm"
+    
+    
+    
